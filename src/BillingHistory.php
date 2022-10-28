@@ -6,7 +6,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class BillingHistory extends Model
+final class BillingHistory extends Model
 {
-
+    public function getBillingStatistics(UserInterface $user)
+    {
+        return $this->where('user_id', $user->id)
+            ->groupBy('created_at')
+            ->get();
+    }
 }
