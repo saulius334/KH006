@@ -13,22 +13,26 @@ final class Payments extends Model
     {
         $this->user = $user;
     }
+
+    public function getBalance(): int
+    {
+        return $this->user->balance;
+    }
+
+    public function setBalance(): void
+    {
+        $this->balance = $this->user->balance;
+    }
+
     public function getPaymentsStatistics()
     {
         return $this->where('user_id', $this->user->id)
             ->groupBy('created_at')
             ->get();
     }
+    
     public function addToBalance(int $sum): int
     {
         return $this->user->getBalance()->addSum($sum);
-    }
-    public function getBalance(): int
-    {
-        return $this->user->balance;
-    }
-    public function setBalance(): void
-    {
-        $this->balance = $this->user->balance;
     }
 }

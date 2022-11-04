@@ -9,7 +9,6 @@ use PharIo\Manifest\InvalidEmailException;
 
 final class LoginRegister
 {
-    private $easyTokenReminderGenerator; // not sure whats this for
     public function login(string $email, string $password): bool
     {
         $user = User::where('email', $email)
@@ -37,7 +36,7 @@ final class LoginRegister
     {
         if ($this->checkIfEMailIsValid($email)) {
             $token = $this->createPasswordToken($email);
-            self::update([
+            User::update([
                 'reset_token' => $token,
             ]);
     
@@ -58,7 +57,7 @@ final class LoginRegister
         return md5($email);
     }
 
-    private function checkIfEMailIsValid(): bool
+    private function checkIfEMailIsValid($email): bool
     {
         //validation
         return true;
